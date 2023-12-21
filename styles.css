@@ -1,0 +1,78 @@
+body,
+html {
+    background: #F2E5EA;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#card-container {
+    position: relative;
+    width: 80%;
+    /* Card takes up 80% width */
+    max-width: 400px;
+    /* You can adjust this to fit your design */
+    margin: 20px auto;
+}
+
+.card {
+    width: 100%;
+    /* Full width of the container */
+    height: calc(100% * (3.5 / 2.5));
+    /* Maintain aspect ratio of 3.5:2.5 */
+    background-image: url('img/card-back.svg');
+    background-size: cover;
+    border-radius: 10px;
+    position: absolute;
+    /* Position absolutely to stack cards */
+    top: 0;
+    /* Align all cards to the top */
+    left: 0;
+    /* Align all cards to the left */
+    display: none;
+    /* Hide all cards initially */
+}
+
+.card.active {
+    display: block;
+    /* Only active card is shown */
+}
+
+.nav-dots {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: -50px;
+    /* Position below the card */
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-dots .dot {
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+    background-color: #742449;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.nav-dots .dot.active {
+    background-color: #ddafc6;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: -100px;
+    /* Position below the navigation dots */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* ...existing button styles... */

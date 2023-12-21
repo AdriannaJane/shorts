@@ -1,0 +1,6 @@
+{
+  "plot": ["Plot 1", "Plot 2", "Plot 3"],
+  "type": ["Type 1", "Type 2", "Type 3"],
+  "setting": ["Setting 1", "Setting 2", "Setting 3"],
+  "tone": ["Tone 1", "Tone 2", "Tone 3"]
+}
