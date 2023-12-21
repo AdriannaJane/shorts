@@ -1,93 +1,89 @@
-// Define categories object to store card data
-const categories = {
-  plot: [],
-  type: [],
-  setting: [],
-  tone: []
-};
+document.addEventListener('DOMContentLoaded', function () {
+    const drawCardButton = document.getElementById('draw-card-button');
+    const cards = document.querySelectorAll('.card');
+    const navDotsContainer = document.querySelector('.nav-dots'); // Container for nav dots
+    const navDots = document.querySelectorAll('.nav-dots .dot');
+    let currentCardIndex = 0; // Start with the first card
+    let cardData = [];
 
-// Load the JSON file and initialize the categories
-fetch('cards.json')
-  .then(response => response.json())
-  .then(data => {
-    Object.assign(categories, data);
-    initializeGame();
-    setCardHeight(); // Ensure card heights are set after fetching data
-  })
-  .catch(error => console.error('Error loading card data:', error));
+    // Initially hide nav dots
+    navDotsContainer.style.visibility = 'hidden';
 
-function initializeGame() {
-  // Set the initial height for all cards
-  setCardHeight();
+    // Set the first card as visible
+    cards[currentCardIndex].style.display = 'flex';
+    navDots[currentCardIndex].classList.add('active');
 
-  // Show the back of the first card
-  const firstCard = document.querySelector('.card');
-  firstCard.classList.add('active');
-}
+    drawCardButton.addEventListener('click', function () {
+        if (drawCardButton.textContent === 'Draw') {
+            drawNewCard();
+            // Make nav dots visible after drawing cards
+            navDotsContainer.style.visibility = 'visible';
+        } else {
+            resetCards();
+            // Hide nav dots after resetting the game
+            navDotsContainer.style.visibility = 'hidden';
+        }
+    });
 
-function drawCards() {
-  showCard(1);
-  const cards = document.querySelectorAll('.card');
-  const categoriesKeys = Object.keys(categories);
+    navDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            showCard(index);
+        });
+    });
 
-  cards.forEach((card, index) => {
-    const category = categoriesKeys[index];
-    const randomIndex = Math.floor(Math.random() * categories[category].length);
-    const text = categories[category][randomIndex];
+    function showCard(index) {
+        // Hide the currently displayed card
+        cards[currentCardIndex].style.display = 'none';
+        navDots[currentCardIndex].classList.remove('active');
 
-    card.style.backgroundImage = `url('img/card-${category}.svg')`;
-    card.innerHTML = `<div class="card-content">${text}</div>`;
-    card.classList.add('flipped');
-  });
+        // Show the new card
+        cards[index].style.display = 'flex';
+        navDots[index].classList.add('active');
 
-  document.getElementById('draw').style.display = 'none';
-  document.getElementById('reset').style.display = 'block';
-}
+        currentCardIndex = index;
+    }
+    
+    function drawNewCard() {
+        fetch('cards.json')
+            .then(response => response.json())
+            .then(data => {
+                cardData = data;
+                cards.forEach(card => {
+                    const category = card.dataset.category;
+                    const randomIndex = Math.floor(Math.random() * cardData[category].texts.length);
+                    const textContent = cardData[category].texts[randomIndex];
+                    const headingContent = cardData[category].headings[randomIndex];
 
-function resetGame() {
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => {
-    card.innerHTML = '';
-    card.style.backgroundImage = `url('img/card-back.svg')`;
-    card.classList.remove('flipped');
-  });
+                    const backSide = card.querySelector('.back-side');
+                    const textElement = backSide.querySelector('p');
+                    const headingElement = backSide.querySelector('h2'); // Select the h2 element
 
-  document.getElementById('draw').style.display = 'block';
-  document.getElementById('reset').style.display = 'none';
-  showCard(1); // Reset to show the first card
-}
+                    backSide.style.backgroundImage = `url('img/card-${category}.svg')`;
+                    textElement.textContent = textContent;
+                    headingElement.textContent = headingContent; // Update the h2 content
 
-function showCard(index) {
-  const cards = document.querySelectorAll('.card');
-  const dots = document.querySelectorAll('.dot');
+                    card.classList.add('flipped');
+                });
+                drawCardButton.textContent = 'Reset';
+            })
+            .catch(error => {
+                console.error('Error fetching card data:', error);
+            });
+    }
 
-  // Hide all cards and show only the selected one
-  cards.forEach(card => card.classList.remove('active'));
-  cards[index - 1].classList.add('active');
+    function resetCards() {
+        cards.forEach(card => {
+            card.classList.remove('flipped');
+            card.style.display = 'none'; // Hide all cards
+            card.querySelector('.back-side').style.backgroundImage = '';
+            card.querySelector('p').textContent = '';
+        });
 
-  // Update the dots to match the selected card
-  dots.forEach(dot => dot.classList.remove('active'));
-  dots[index - 1].classList.add('active');
-}
-function setCardHeight() {
-  const cardContainer = document.getElementById('card-container');
-  const cardContainerWidth = cardContainer.offsetWidth;
-  const cards = document.querySelectorAll('.card');
+        // Reset the display of the first card and its nav dot
+        cards[0].style.display = 'flex';
+        navDots[0].classList.add('active');
+        currentCardIndex = 0;
 
-  // Calculate the height based on the width and the aspect ratio 3.5:2.5
-  const cardHeight = cardContainerWidth * (3.5 / 2.5);
-  
-  cards.forEach(card => {
-    card.style.height = `${cardHeight}px`;
-    card.style.width = `${cardContainerWidth}px`; // Set width to 100% of the container width
-    card.style.borderRadius = '50px'; // Apply border radius
-  });
-}
-
-// Call setCardHeight on window resize and after the DOM is fully loaded
-window.addEventListener('resize', setCardHeight);
-
-document.addEventListener('DOMContentLoaded', () => {
-  setCardHeight(); // Call this function to set the height as soon as the page loads
-  initializeGame(); // Then initialize the game
+        drawCardButton.textContent = 'Draw';
+    }
 });

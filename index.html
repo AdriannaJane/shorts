@@ -4,36 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Game</title>
+    <title>Creative writing inspiration</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-
-    <div id="card-container">
-        <div class="card plot" data-category="plot"></div>
-        <div class="card type" data-category="type"></div>
-        <div class="card setting" data-category="setting"></div>
-        <div class="card tone" data-category="tone"></div>
-    </div>
-    
     <!-- Navigation dots -->
     <div class="nav-dots">
-        <div class="dot active" onclick="showCard(1)"></div>
-        <div class="dot" onclick="showCard(2)"></div>
-        <div class="dot" onclick="showCard(3)"></div>
-        <div class="dot" onclick="showCard(4)"></div>
+        <span class="dot active" data-target="plot">Plot</span>
+        <span class="dot" data-target="type">Type</span>
+        <span class="dot" data-target="setting">Setting</span>
+        <span class="dot" data-target="tone">Tone</span>
     </div>
-    
-
-    <div class="button-container">
-        <button id="how-to-play" onclick="window.open('file/instructions.pdf', '_blank')"><img src="img/InfoButton.svg"> How to play</button>
-        <button id="draw" onclick="drawCards()">Draw</button>
-        <button id="reset" onclick="resetGame()" style="display: none;">Reset</button>
+    <div id="card-container" class="card-container">
+        <!-- Cards -->
+        <div class="card plot" data-category="plot">
+            <div class="card-side front-side"></div>
+            <div class="card-side back-side">
+                <h2 id="plot-head"></h2>
+                <p id="plot-text"></p>
+            </div>
+        </div>
+        <div class="card type" data-category="type">
+            <div class="card-side front-side"></div>
+            <div class="card-side back-side">
+                <h2 id="type-head"></h2>
+                <p id="type-text"></p>
+            </div>
+        </div>
+        <div class="card setting" data-category="setting">
+            <div class="card-side front-side"></div>
+            <div class="card-side back-side">
+                <h2 id="setting-head"></h2>
+                <p id="setting-text"></p>
+            </div>
+        </div>
+        <div class="card tone" data-category="tone">
+            <div class="card-side front-side"></div>
+            <div class="card-side back-side">
+                <h2 id="tone-head"></h2>
+                <p id="tone-text"></p>
+            </div>
+        </div>
     </div>
-
-
+        
+        <!-- Buttons -->
+        <div class="button-container">
+            <button id="how-to-play" onclick="window.open('file/instructions.pdf', '_blank')"><img src="img/InfoButton.svg"> How
+                to play</button>
+            <button id="draw-card-button">Draw</button>
+        </div>
     <script src="script.js"></script>
 </body>
 
 </html>
+
+

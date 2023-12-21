@@ -1,78 +1,222 @@
-body,
-html {
-    background: #F2E5EA;
+    body,
+    html {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Roboto Slab', serif;
+    background-color: #F2E5EA;
+    flex-direction: column;
+    letter-spacing: 1px;
 }
 
-#card-container {
+.card-container {
+    text-align: center;
+    perspective: 1000px;
+    width: 300px;
+    height: 420px;
     position: relative;
-    width: 80%;
-    /* Card takes up 80% width */
-    max-width: 400px;
-    /* You can adjust this to fit your design */
-    margin: 20px auto;
+    margin: 50px auto;
 }
 
 .card {
-    width: 100%;
-    /* Full width of the container */
-    height: calc(100% * (3.5 / 2.5));
-    /* Maintain aspect ratio of 3.5:2.5 */
-    background-image: url('img/card-back.svg');
-    background-size: cover;
-    border-radius: 10px;
-    position: absolute;
-    /* Position absolutely to stack cards */
-    top: 0;
-    /* Align all cards to the top */
-    left: 0;
-    /* Align all cards to the left */
     display: none;
-    /* Hide all cards initially */
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
 }
 
 .card.active {
-    display: block;
-    /* Only active card is shown */
+    display: flex;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-side {
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.front-side,
+.back-side {
+    background-color: white;
+    width: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 25px;
+}
+
+.front-side {
+    /* Adjust as needed for your card-front.svg */
+}
+
+.back-side {
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-size: cover;
+}
+
+.front-side {
+
+    background-image: url('img/card-back.svg');
+}
+
+.back-side {
+    max-width: 300px;
+    background-image: url('img/card-plot.svg');
+    transform: rotateY(180deg);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+button {
+    font-family: 'roboto slab', 'serif';
+    padding: 10px 20px;
+    border: none;
+    background-color: #32405d;
+    color: white;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-size: 1.2em;
+    font-weight: 800;
+}
+
+button:hover {
+    background-color: #3a89c4;
+}
+
+h2 {
+    color: #420D26;
+    margin: 0 30px;
+    padding: 0;
+    position: absolute;
+    top: 160px;
+    font-size: 0.8em;
+
+}
+
+p {
+    color: #420D26;
+    position: absolute;
+    top: 175px;
+    font-size: 0.75em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 40px;
+    padding-top: 0;
+
 }
 
 .nav-dots {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    bottom: -50px;
-    /* Position below the card */
     width: 100%;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .nav-dots .dot {
-    height: 20px;
-    width: 20px;
-    margin: 5px;
-    background-color: #742449;
-    border-radius: 50%;
+    height: 32px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    color: #B44E79;
+    border: 2px solid #B44E79;
+    background: none;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
     cursor: pointer;
 }
 
 .nav-dots .dot.active {
+    color: #FFF;
+    border-radius: 50px;
+    background: #B44E79;
+}
+
+
+/* BUTTONS BABY */
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #742449;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    margin: 0 10px;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover {
+    background-color: #510b2e;
+    color: #fff;
+}
+
+#how-to-play {
+    background-color: transparent;
+    color: #742449;
+    border: 2px solid #742449;
+    /* Added border to match the style */
+}
+
+#how-to-play:hover {
+    color: #510b2e;
     background-color: #ddafc6;
+    border-color: #510b2e;
+    /* Border color changes on hover */
+}
+
+#reset {
+    display: none;
+    background-color: #742449;
+    /* Match other buttons */
+    color: #fff;
+}
+
+#reset:hover {
+    background-color: #510b2e;
+    /* Hover effect like other buttons */
 }
 
 .button-container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    position: absolute;
-    bottom: -100px;
-    /* Position below the navigation dots */
-    left: 50%;
-    transform: translateX(-50%);
 }
 
-/* ...existing button styles... */
