@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     navDots[currentCardIndex].classList.add('active');
 
     drawCardButton.addEventListener('click', function () {
+        
         if (drawCardButton.textContent === 'Draw') {
             drawNewCard();
             // Make nav dots visible after drawing cards
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Hide nav dots after resetting the game
             navDotsContainer.style.visibility = 'hidden';
         }
+        
     });
 
     navDots.forEach((dot, index) => {
@@ -43,33 +45,36 @@ document.addEventListener('DOMContentLoaded', function () {
         currentCardIndex = index;
     }
 
-   function drawNewCard() {
+function drawNewCard() {
     fetch('cards.json')
         .then(response => response.json())
         .then(data => {
+            console.log("Card Data Loaded: ", data); // Log to check the loaded data
             cardData = data;
             cards.forEach(card => {
                 const category = card.dataset.category;
+                console.log(`Processing card: ${category}`); // Log to see which card is being processed
+
                 const backSide = card.querySelector('.back-side');
                 const textElement = backSide.querySelector('p');
-                const headingElement = backSide.querySelector('h2'); // Might be null for 'plot'
+                let textContent;
 
-                let textContent, headingContent;
                 if (category === 'plot') {
-                    // Handle 'plot' differently as it has no headings
-                    textContent = cardData[category][Math.floor(Math.random() * cardData[category].length)];
-                    headingElement.style.display = 'none'; // Hide heading for 'plot'
+                    // Correctly access the plot texts within the nested structure
+                    textContent = cardData[category].texts[Math.floor(Math.random() * cardData[category].texts.length)];
+                    console.log(`Plot Text: ${textContent}`); // Log to check the text for plot
+                    textElement.textContent = textContent;
                 } else {
-                    // Other categories with both headings and texts
+                    // For other categories, use both texts and headings
                     const randomIndex = Math.floor(Math.random() * cardData[category].texts.length);
                     textContent = cardData[category].texts[randomIndex];
-                    headingContent = cardData[category].headings[randomIndex];
+                    const headingContent = cardData[category].headings[randomIndex];
+                    const headingElement = backSide.querySelector('h2');
                     headingElement.textContent = headingContent;
+                    textElement.textContent = textContent;
                 }
 
                 backSide.style.backgroundImage = `url('img/card-${category}.svg')`;
-                textElement.textContent = textContent;
-
                 card.classList.add('flipped');
             });
             drawCardButton.textContent = 'Reset';
@@ -78,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error fetching card data:', error);
         });
 }
+
+
+
 
 
     function resetCards() {
