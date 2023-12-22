@@ -134,8 +134,7 @@ p {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    padding: 40px;
-    padding-top: 0;
+    max-width: 200px;
 
 }
 
