@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     const drawCardButton = document.getElementById('draw-card-button');
     const cards = document.querySelectorAll('.card');
