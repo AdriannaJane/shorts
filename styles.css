@@ -121,7 +121,7 @@ h2 {
     margin: 0 30px;
     padding: 0;
     position: absolute;
-    top: 160px;
+    top: 155px;
     font-size: 0.8em;
 
 }
@@ -129,12 +129,14 @@ h2 {
 p {
     color: #420D26;
     position: absolute;
-    top: 175px;
+    top: 180px;
     font-size: 0.75em;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     max-width: 200px;
+    margin: auto;
+    text-align: center;
 
 }
 
